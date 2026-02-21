@@ -3,6 +3,7 @@ using AuthorizationIntegration.Application.Mappings;
 using AuthorizationIntegration.Application.Services;
 using AuthorizationIntegration.Core.Database;
 using AuthorizationIntegration.Core.Helper;
+using AuthorizationIntegration.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<RoleService>();
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddScoped<PermissionService>();
 builder.Services.AddScoped<CacheService>();
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<EmailService>();
@@ -85,7 +87,7 @@ if (app.Environment.IsDevelopment())
   });
 }
 
-
+app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
