@@ -1,4 +1,5 @@
-﻿using AuthorizationIntegration.Application.Services;
+﻿using AuthorizationIntegration.Application.Dtos;
+using AuthorizationIntegration.Application.Services;
 using AuthorizationIntegration.Core.Entitites;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,10 +19,10 @@ public class AuthController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpGet("Login")]
-    public IActionResult Login(string email, string password)
+    [HttpPost("Login")]
+    public IActionResult Login([FromBody] LoginDto dto)
     {
-        var token = _authService.Login(email, password);
+        var token = _authService.Login(dto.Email, dto.Password);
         if (string.IsNullOrEmpty(token))
         {
             return BadRequest("Invalid email or password.");

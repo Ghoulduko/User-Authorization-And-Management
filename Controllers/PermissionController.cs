@@ -29,7 +29,7 @@ public class PermissionController : ControllerBase
         }
         if (userRole == "1" || userRole == "2" || userRole == "5")
         {
-            return BadRequest("You do not have permission to access this resource.");
+            return StatusCode(403, "You do not have permission to access this resource.");
         }
 
         var permissions = _permissionService.GetAllPermissionsOfRole(roleId);
@@ -46,7 +46,7 @@ public class PermissionController : ControllerBase
         }
         if (userRole == "1" || userRole == "2" || userRole == "5")
         {
-            return BadRequest("You do not have permission to access this resource.");
+            return StatusCode(403, "You do not have permission to access this resource.");
         }
 
         var permission = new PermissionAttachmentDto
